@@ -1,15 +1,13 @@
-<<<<<<< HEAD
-
 # TCGA-BLCA Somatic Mutation Analysis Pipeline  
-*A reproducible Nextflow + Docker + R (maftools) workflow*
+A reproducible Nextflow + Docker + R (maftools) workflow
 
 ---
 
 ## **Overview**
 
-This repository contains a fully automated **somatic mutation analysis** workflow for the **TCGA Bladder Urothelial Carcinoma (BLCA)** dataset. It processes Mutation Annotation Format (MAF) files, summarizes mutation statistics, generates maftools plots, and produces a polished HTML report.
+This repository contains a fully automated somatic mutation analysis workflow for the TCGA Bladder Urothelial Carcinoma (BLCA) dataset. It processes Mutation Annotation Format (MAF) files, summarizes mutation statistics, generates maftools plots, and produces a polished HTML report.
 
-The pipeline is designed for **high reproducibility**, **modular analysis**, and **clean separation of steps** using Nextflow.
+The pipeline is designed for reproducibility, modular analysis, and separation of steps using Nextflow.
 
 ---
 
@@ -17,19 +15,18 @@ The pipeline is designed for **high reproducibility**, **modular analysis**, and
 
 Bladder cancer is characterized by high mutational burden and well-defined driver events (e.g., *TP53, FGFR3, KDM6A*). Large-scale datasets like TCGA provide rich somatic mutation data, but:
 
-- Raw GDC downloads contain **deeply nested folders**,  
-- Files may be **compressed (`.maf.gz`) or mixed formats**,  
-- Manual merging is **error-prone and not reproducible**,  
-- Visualization requires **multiple maftools commands**,  
-- Students/researchers need a **turnkey, end-to-end analysis pipeline**.
+- Raw GDC downloads contain nested folders,  
+- Files may be compressed (`.maf.gz`) or in mixed formats,  
+- Manual merging is prone to error and difficult to reproduce,  
+- Visualization requires multiple maftools commands,  
+- Researchers need an end-to-end analysis pipeline.
 
 This workflow solves these issues by providing:
 
-- Automated preprocessing (flattening + cleaning)  
-- Deterministic MAF merging  
-- Modular analysis steps  
-- A complete HTML report with embedded plots  
-- Containerized execution for 100% reproducibility  
+- MAF merging into one multi-MAF for analysis
+- Modular analysis steps using maftools in R
+- A HTML report with embedded plots  
+- Containerized execution for reproducibility  
 
 ---
 
@@ -44,7 +41,6 @@ This workflow solves these issues by providing:
 │   ├── generate_html_report.R
 │   └── flatten_mafs.py
 ├── data/
-│   ├── gdc_download_20251128_235135.992686/
 │   └── all_maf_flat/
 ├── Dockerfile
 ├── nextflow.config
@@ -54,25 +50,29 @@ This workflow solves these issues by providing:
 
 ---
 
-# **Input Preparation: `flatten_mafs.py`**
+# **(Already preprocessed) Input Preparation using: `flatten_mafs.py`**
 
-Run:
+- downloaded mutation annotation files from tcga-blca bladder cancer from 408 cases with 415 maf files that are open access and tumour tissue type
+- for the purpose of this project, only 17 maf files were kept under data/all_maf_flat folder due to files exceeding the github size limit
+- the 17 files were kept at random in order to avoid bias
 
-```bash
-python3 bin/flatten_mafs.py     --input data/gdc_download_20251128_235135.992686     --output data/all_maf_flat
+the 415 files were already preprocessed using:
+
+```
+python3 bin/flatten_mafs.py  
 ```
 
-This step:
+This step has resulted in:
 
-- Extracts only `.maf` files  
-- Removes `.maf.gz`  
-- Flattens all valid MAFs into one directory:
+- Extracting only `.maf` files from nested structure of gdc_download folder
+- Removed `.maf.gz`  
+- Flattend all valid MAFs into one directory:
 
 ```
 data/all_maf_flat/
 ```
 
-This is the final input for the pipeline.
+This directory is the final input for the pipeline, and contains 17 MAF files.
 
 ---
 
@@ -86,11 +86,10 @@ HTML is generated after plots.
 
 ---
 
-# **Workflow Diagram (Oval DAG)**
+# **Workflow Diagram**
 
 
-
-
+<img width="960" height="540" alt="Untitled presentation" src="https://github.com/user-attachments/assets/f06675a3-7591-483d-bc90-b21e1a5e35e8" />
 
 
 
@@ -142,12 +141,11 @@ Includes all maftools plots:
 - Aggregated rainfall
 
 ### **summary.tsv**  
-Contains mutation counts and gene/sample statistics.
+Contains mutation counts and gene/sample statistics
 
 ### **report.html**  
-Fully embedded HTML report.
+Fully embedded HTML report
 
 =======
 # maf-analysis-pipeline
 TCGA BLCA somatic mutation analysis pipeline using Nextflow, R, maftools, and Docker
->>>>>>> f58fa5dbdf5cd781dbbdcf0f89ca577c2dfef012
