@@ -123,6 +123,10 @@ docker buildx build --platform linux/amd64     -t tcga-maftools-blca-fixed:lates
 
 # **Run the Pipeline**
 
+Please ensure that Nextflow is installed and available in your active environment. If you are using Conda, make sure to activate the appropriate environment before running any Nextflow commands.
+
+Command to run the pipeline:
+
 ```bash
 nextflow run main.nf -profile docker
 ```
