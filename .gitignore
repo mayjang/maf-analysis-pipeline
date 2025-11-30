@@ -1,33 +1,4 @@
-# Nextflow working directories
 work/
-.nextflow*
-.cache/
-
-# Results (optional, keep only if you want)
-results/
-
-# macOS
+.nextflow/
+.nextflow.log*
 .DS_Store
-
-# R
-.Rhistory
-.RData
-.Rproj.user/
-
-# Python
-__pycache__/
-*.pyc
-
-# Docker build artifacts
-*.img
-*.sif
-
-# Logs
-*.log
-
-# HTML report cache (optional)
-plots/
-intermediate.rds
-summary.tsv
-report.html
-
